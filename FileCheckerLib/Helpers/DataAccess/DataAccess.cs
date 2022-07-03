@@ -7,14 +7,14 @@ namespace FileCheckerLib.Helpers
     /// <summary>
     /// Вспомогательный класс доступа к данным
     /// </summary>
-    public static class DataAccessHelper
+    public class DataAccess : IDataAccess
     {
         /// <summary>
         /// Возвращает из ответа СУБД список строк данных
         /// </summary>
         /// <param name="dataReader">Объект DbDataReader</param>
         /// <returns>Список строк данных</returns>
-        public static List<FileRecordModel> GetData(this DbDataReader dataReader)
+        public List<FileRecordModel> GetData(DbDataReader dataReader)
         {
             List<FileRecordModel> output = new List<FileRecordModel>();
 
@@ -40,7 +40,7 @@ namespace FileCheckerLib.Helpers
         /// </summary>
         /// <param name="dataReader">Объект DbDataReader</param>
         /// <returns>Список связанных/дочерних таблиц</returns>
-        public static List<ChildTableModel> GetTables(this DbDataReader dataReader)
+        public List<ChildTableModel> GetTables(DbDataReader dataReader)
         {
             List<ChildTableModel> output = new List<ChildTableModel>();
 

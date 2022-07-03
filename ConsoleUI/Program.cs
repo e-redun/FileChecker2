@@ -10,72 +10,89 @@ namespace FileChecker
     {
         static void Main(string[] args)
         {
-            // список связанных таблиц
-            List<ChildTableModel> childTables;
+            // инициализация глобального хэлпера
+            GlobalHelper.Initialize();
 
 
-            // список файлов подлежащих удалению
-            List<FileRecordModel> recordsToDelete;
+            ILogicHelper logicHelper = new LogicHelper();
+
+            //получение настроек приложения
+            IAppSettings appSettings = logicHelper.GetAppSettings();
+
+            //валидация настроек приложения
+
+            // TODO не получилось применить - не удалось преобразовать тип ...
+            //IEnumerable<ValidationResult> validationResults = 
+            //(IEnumerable<ValidationResult>)logicHelper.ValidateAppSettings2(appSettings);
+
+            string validationResults = logicHelper.ValidateAppSettings3(appSettings);
+
+            if (validationResults.Length > 0)
+            {
+                Console.WriteLine(StandardMessages.Validation.NotValidSettings);
+                Console.WriteLine();
+
+                Console.WriteLine(validationResults);
+
+                Environment.Exit(0);
+            }
 
 
-            // "инициализация" лога
-            FileCheckerLogic.InitializeLog();
-            
-            
             // инициализация соединения с БД
-            FileCheckerLogic.InitializeConnection();
-            
+            logicHelper.InitializeConnection();
 
+            
             // получение списка связанных/"дочерних" таблиц
-            childTables = FileCheckerLogic.GetChildTables();
+            List<ChildTableModel> childTables = logicHelper.GetChildTables();
 
 
             // первичный ключ таблицы File
-            string filePkColumnName = FileCheckerLogic.GetFilePkColumnName();
+            string filePkColumnName = logicHelper.GetFilePkColumnName();
 
 
             // получение списка удаляемых записей
-            recordsToDelete = FileCheckerLogic.GetRecordsToDelete(childTables, filePkColumnName);
-            
+            List<FileRecordModel> recordsToDelete = logicHelper.GetRecordsToDelete(childTables, filePkColumnName);
+
 
             // удаление записей в БД
-            FileCheckerLogic.DeletePathsInDb(recordsToDelete, filePkColumnName);
+            logicHelper.DeletePathsInDb(recordsToDelete, filePkColumnName);
 
 
             // устранение дублирования по полю Path
-            FileCheckerLogic.DistinctRecords(recordsToDelete);
+            logicHelper.DistinctRecords(recordsToDelete);
 
 
             // удаление файлов
-            FileHelper.DeleteFiles(recordsToDelete);
+            GlobalHelper.FileIO.DeleteFiles(recordsToDelete);
             
 
             // получение списка получателей лог-файла
-            List<string> logReceivers = FileCheckerLogic.GetLogReceivers();
+            List<string> logReceivers = logicHelper.GetLogReceivers(appSettings.ReceiversFilePath);
 
 
             // валидация e-mail адресов
-            logReceivers = Validator.ValidateEmails(logReceivers);
+            logReceivers = GlobalHelper.Validator.ValidateEmails(logReceivers);
 
 
             // сохранение лог-файла
-            string logFilePath = Logger.SaveLog();
+            string logFilePath = GlobalHelper.Logger.SaveLog();
 
 
             // отправка лог-файла получателям
             // получение отчета об отправке
-            string emailingReport = FileCheckerLogic.EmailLog(logReceivers, logFilePath);
+            string emailingReport = logicHelper.EmailLog(logReceivers, logFilePath);
 
 
             // дополнение сохраненного лог-файла отчетом об отправке
-            FileHelper.UpDateFile(logFilePath, emailingReport);
+            GlobalHelper.FileIO.UpDateFile(logFilePath, emailingReport);
 
 
             // вывод лог-файла на экран
-            string report = FileHelper.GetFileContent(logFilePath);
-            Console.WriteLine(report);
-            
+            string report = GlobalHelper.FileIO.GetFileContent(logFilePath);
 
+            Console.WriteLine(report);
+
+            Console.WriteLine();
             Console.WriteLine("Обработка закончена");
             Console.ReadKey();
         }

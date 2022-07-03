@@ -6,19 +6,19 @@ using System.Net.Mail;
 namespace FileCheckerLib.Helpers
 {
 
-    public static class Emailer
+    public class Emailer : IEmailer
     {
         /// <summary>
         /// Отправляет вложение
         /// </summary>
         /// <param name="attachmentPath">Вложение</param>
-        public static string SendEmail(this List<string> logReceivers, string logFilePath)
+        public string SendEmail(List<string> logReceivers, string logFilePath)
         {
             string output = "";
             
             Attachment attachment = new Attachment(logFilePath);
 
-            MailAddress fromMailAddress = new MailAddress(GlobalConfig.GetAppSettingsByKey("senderMail"));
+            MailAddress fromMailAddress = new MailAddress(GlobalConfig.GetAppSettingsByKey("senderEmail"));
 
             MailMessage mail = new MailMessage();
 
@@ -30,8 +30,11 @@ namespace FileCheckerLib.Helpers
 
             SmtpClient client = new SmtpClient();
 
+            bool hasError = false;
+
             foreach (string email in logReceivers)
             {
+
                 try
                 {
                     mail.To.Add(email);
@@ -44,13 +47,20 @@ namespace FileCheckerLib.Helpers
                 catch (SmtpException ex)
                 {
                     output += AddDateTimeToMessage(StandardMessages.Mail.LogWasntSent) + email;
-                    Console.WriteLine("Лог" + StandardMessages.Mail.LogWasntSent + email);
-                    Console.WriteLine(StandardMessages.Mail.SmtpExMessage);
+
+                    hasError = true;
                 }
             }
 
+            if (hasError)
+            {
+                output += "\n\n" + StandardMessages.Mail.SmtpExMessage;
+            }
+
             mail.Dispose();
+
             attachment.Dispose();
+
             return output;
         }
 
@@ -59,7 +69,7 @@ namespace FileCheckerLib.Helpers
         /// </summary>
         /// <param name="message">Входящее сообщене</param>
         /// <returns>Входящее сообщение с добавленными датой и временем</returns>
-        static string AddDateTimeToMessage(string message)
+        string AddDateTimeToMessage(string message)
         {
             DateTime now = DateTime.Now;
 

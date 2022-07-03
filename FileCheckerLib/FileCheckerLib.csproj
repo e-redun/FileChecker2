@@ -49,6 +49,7 @@
     <Reference Include="System.Collections.Immutable, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.6.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -95,18 +96,27 @@
     <Compile Include="DataAccess\Connectors\MsSqlConnector.cs" />
     <Compile Include="Delegates\Delegates.cs" />
     <Compile Include="Enums\DbTypes.cs" />
-    <Compile Include="FileCheckerLogic.cs" />
     <Compile Include="GlobalConfig.cs" />
-    <Compile Include="Helpers\ExceptionHandler.cs" />
-    <Compile Include="Helpers\DataAccessHelper.cs" />
-    <Compile Include="Helpers\Emailer.cs" />
-    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Helpers\DataAccess\DataAccess.cs" />
+    <Compile Include="Helpers\DataAccess\IDataAccess.cs" />
+    <Compile Include="Helpers\Emailer\IEmailer.cs" />
+    <Compile Include="Helpers\ExceptionHandler\ExceptionHandler.cs" />
+    <Compile Include="Helpers\Emailer\Emailer.cs" />
+    <Compile Include="Helpers\ExceptionHandler\IExceptionHandler.cs" />
+    <Compile Include="Helpers\FileIO\FileIO.cs" />
+    <Compile Include="Helpers\FileIO\IFileIO.cs" />
+    <Compile Include="Helpers\GlobalHelper.cs" />
+    <Compile Include="Helpers\LogicHelper\ILogicHelper.cs" />
     <Compile Include="Helpers\StandardMessages.cs" />
-    <Compile Include="Helpers\TestHelper.cs" />
-    <Compile Include="Helpers\Validator.cs" />
+    <Compile Include="Helpers\Validator\IValidator.cs" />
+    <Compile Include="Helpers\Validator\Validator.cs" />
+    <Compile Include="Helpers\LogicHelper\LogicHelper.cs" />
+    <Compile Include="Models\AppSettings\AppSettingsModel.cs" />
+    <Compile Include="Models\AppSettings\IAppSettings.cs" />
     <Compile Include="Models\ChildTableModel.cs" />
     <Compile Include="Models\FileRecordModel.cs" />
-    <Compile Include="Models\Logger.cs" />
+    <Compile Include="Helpers\Logger\ILogger.cs" />
+    <Compile Include="Helpers\Logger\Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

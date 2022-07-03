@@ -30,7 +30,7 @@
 
             public static string LogWasntSent { get; } = " не был отправлен по адресу: ";
 
-            public static string SmtpExMessage { get; } = "Проверьте настройки smtp-сервера.";
+            public static string SmtpExMessage { get; } = "Проверьте настройки smtp-сервера и сетевое подключение.";
 
         }
 
@@ -39,6 +39,8 @@
         /// </summary>
         public struct Validation
         {
+            public static string NotValidSettings { get; } = "Установки приложения не являеются корректным.\nПроверьте файл App.config";
+
             public static string NotValidEmail { get; } = " не является корректным e-mail";
 
             public static string ReceiverListIsEmpty { get; } = "Список валидных e-mail пустой";

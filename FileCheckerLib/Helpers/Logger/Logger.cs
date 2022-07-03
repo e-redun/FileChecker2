@@ -2,17 +2,36 @@
 using System.IO;
 using System.Text;
 
-namespace FileCheckerLib.Models
+namespace FileCheckerLib.Helpers
 {
-    public static class Logger
+    public class Logger : ILogger
     {
-        private static StringBuilder log = new StringBuilder();
+        private StringBuilder log = new StringBuilder();
+
+        public Logger()
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Инициализирует логгер
+        /// </summary>
+        private void Initialize()
+        {
+            Add("Лог FileChecker");
+            Add("");
+
+            string dbTypesToUse = GlobalConfig.GetAppSettingsByKey("DbTypeToUse");
+
+            Add("Тип СУБД: " + dbTypesToUse);
+            Add("");
+        }
 
         /// <summary>
         /// Добавляет запись в лог
         /// </summary>
         /// <param name="record">Запись</param>
-        public static void Add(string record)
+        public void Add(string record)
         {
             log.AppendLine(record);
         }
@@ -22,7 +41,7 @@ namespace FileCheckerLib.Models
         /// </summary>
         /// <param name="logFileFolder">Папка с логами</param>
         /// <returns>Возвращает путь к лог-файлу</returns>
-        public static string SaveLog()
+        public string SaveLog()
         {
             DateTime nowDateTime = DateTime.Now;
 

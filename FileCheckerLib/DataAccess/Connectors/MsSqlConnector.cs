@@ -61,7 +61,7 @@ namespace FileCheckerLib.DataAccess
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    output = reader.GetData();
+                    output = GlobalHelper.DataAccess.GetData(reader);
                 }
 
                 connection.Close();
@@ -114,7 +114,7 @@ namespace FileCheckerLib.DataAccess
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    output = reader.GetTables();
+                    output = GlobalHelper.DataAccess.GetTables(reader);
                 }
 
                 connection.Close();
