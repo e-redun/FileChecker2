@@ -15,7 +15,6 @@ namespace FileCheckerLib.Helpers
         List<string> GetLogReceivers(string filePath);
         List<FileRecordModel> GetRecordsToDelete(List<ChildTableModel> childTables, string filePkColumnName);
         void InitializeConnection();
-        IEnumerable<ValidationResult> ValidateAppSettings2(IAppSettings settings);
         string  ValidateAppSettings3(IAppSettings settings);
     }
 }

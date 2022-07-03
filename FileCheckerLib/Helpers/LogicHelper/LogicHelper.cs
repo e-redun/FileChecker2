@@ -48,47 +48,6 @@ namespace FileCheckerLib.Helpers
         }
 
 
-        /// <summary>
-        /// Валидирует настройки программы
-        /// </summary>
-        /// <returns>Результат валидации - Список описаний ошибок</returns>
-        public IEnumerable<ValidationResult> ValidateAppSettings2(IAppSettings settings)
-        {
-            List<ValidationResult> output = new List<ValidationResult>();
-
-            // Лог-папка
-            if (!GlobalHelper.Validator.ValidateFolder(settings.LogFolder))
-            {
-                output.Add(new ValidationResult("Папка сохранения лог-файлов невалидная."));
-            }
-
-            // папка Other
-            if (!GlobalHelper.Validator.ValidateFolder(settings.OtherFolder))
-            {
-                output.Add(new ValidationResult("Папка Other невалидная."));
-            }
-
-            // файл получателей лога
-            if (!GlobalHelper.Validator.ValidateLogReceiversFile(settings.ReceiversFilePath))
-            {
-                output.Add(new ValidationResult("Путь к файлу получателей лог-файла невалидный."));
-            }
-
-            // email отправителя
-            if (!GlobalHelper.Validator.ValidateEmail(settings.SenderEmail))
-            {
-                output.Add(new ValidationResult("E-mail отправителя невалидный."));
-            }
-
-            // тип базы данных
-            if (!GlobalHelper.Validator.ValidateDbType(settings.StrDbType))
-            {
-                output.Add(new ValidationResult("Тип БД невалидный."));
-            }
-
-            return output;
-        }
-
         /// </summary>
         /// Валидирует настройки программы
         /// </summary>
