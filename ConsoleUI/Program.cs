@@ -20,11 +20,6 @@ namespace FileChecker
             IAppSettings appSettings = logicHelper.GetAppSettings();
 
             //валидация настроек приложения
-
-            // TODO не получилось применить - не удалось преобразовать тип ...
-            //IEnumerable<ValidationResult> validationResults = 
-            //(IEnumerable<ValidationResult>)logicHelper.ValidateAppSettings2(appSettings);
-
             string validationResults = logicHelper.ValidateAppSettings3(appSettings);
 
             if (validationResults.Length > 0)
