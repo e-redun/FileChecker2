@@ -29,10 +29,11 @@ namespace FileChecker
 
             if (validationResults.Length > 0)
             {
-                Console.WriteLine(StandardMessages.Validation.NotValidSettings);
-                Console.WriteLine();
+                Console.WriteLine(StandardMessages.Validation.NotValidSettings); Console.WriteLine();
 
                 Console.WriteLine(validationResults);
+
+                Console.ReadKey();
 
                 Environment.Exit(0);
             }
