@@ -16,12 +16,8 @@ namespace FileCheckerLib.Helpers
         /// <summary>
         /// Инициализирует соединение с БД
         /// </summary>
-        public void InitializeConnection()
+        public void InitializeConnection(DbTypes dbType)
         {
-            string dbTypesToUse = GlobalConfig.GetAppSettingsByKey("DbTypeToUse");
-
-            DbTypes dbType = (DbTypes)Enum.Parse(typeof(DbTypes), dbTypesToUse);
-
             GlobalConfig.InitializeConnection(dbType);
         }
 

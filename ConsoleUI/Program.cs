@@ -35,7 +35,7 @@ namespace FileChecker
 
 
             // инициализация соединения с БД
-            logicHelper.InitializeConnection();
+            logicHelper.InitializeConnection(appSettings.DbType);
 
             
             // получение списка связанных/"дочерних" таблиц
