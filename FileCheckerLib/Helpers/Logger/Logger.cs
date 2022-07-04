@@ -37,26 +37,23 @@ namespace FileCheckerLib.Helpers
         }
 
         /// <summary>
-        /// Создает лог=файл и возвращает путь к нему
+        /// Создает лог-файл и возвращает путь к нему
         /// </summary>
-        /// <param name="logFileFolder">Папка с логами</param>
-        /// <returns>Возвращает путь к лог-файлу</returns>
-        public string SaveLog()
+        /// <param name="logFolderPath">Путь к лог-папке</param>
+        /// <returns>Путь к лог-файлу</returns>
+        public string SaveLog(string logFolderPath)
         {
             DateTime nowDateTime = DateTime.Now;
-
-            // путь папки с лог-файлами
-            string logFileFolder = GlobalConfig.GetAppSettingsByKey("logFolder");
 
             // имя лог-файла
             string logFileName = nowDateTime.ToString("yyyyMMddHHmmss") + "_FileCheckerLog.txt";
 
             // путь лог-файла
-            string logFilePath = Path.Combine(logFileFolder, logFileName);
+            string logFilePath = Path.Combine(logFolderPath, logFileName);
 
-            if (!Directory.Exists(logFileFolder))
+            if (!Directory.Exists(logFolderPath))
             {
-                Directory.CreateDirectory(logFileFolder);
+                Directory.CreateDirectory(logFolderPath);
             }
 
             File.WriteAllText(logFilePath, log.ToString());

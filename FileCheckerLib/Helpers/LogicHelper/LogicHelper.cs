@@ -1,11 +1,7 @@
 ﻿using FileCheckerLib.Delegates;
 using FileCheckerLib.Enums;
 using FileCheckerLib.Models;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -49,7 +45,7 @@ namespace FileCheckerLib.Helpers
         /// </summary>
         /// <param name="settings">Настройки приложения</param>
         /// <returns>Результат валидации - Список описаний ошибок</returns>
-        public string ValidateAppSettings3(IAppSettings settings)
+        public string ValidateAppSettings(IAppSettings settings)
         {
             StringBuilder output = new StringBuilder();
 
@@ -218,6 +214,55 @@ namespace FileCheckerLib.Helpers
             }
 
             return output;
+        }
+
+        /// <summary>
+        /// Удаляет список файлов
+        /// </summary>
+        /// <param name="recordsToDelete">Список файлов подлежащих удалению</param>
+        public void DeleteFiles(List<FileRecordModel> recordsToDelete)
+        {
+            GlobalHelper.FileIO.DeleteFiles(recordsToDelete);
+        }
+
+
+        /// <summary>
+        /// Валидирует список e-mail
+        /// </summary>
+        /// <param name="emails">Cписок e-mail</param>
+        public List<string> ValidateEmails(List<string> emails)
+        {
+            return GlobalHelper.Validator.ValidateEmails(emails);
+        }
+
+        /// <summary>
+        /// Создает лог-файл и возвращает путь к нему
+        /// </summary>
+        /// <param name="logFolderPath">Путь к лог-папке</param>
+        /// <returns>Путь к лог-файлу</returns>
+        public string SaveLog(string logFolderPath)
+        {
+            return GlobalHelper.Logger.SaveLog(logFolderPath);
+        }
+
+        /// <summary>
+        /// Обновляет лог-файл отчетом об отправке e-mail
+        /// </summary>
+        /// <param name="filePath">Путь сохраненного лог-файла</param>
+        /// <param name="report">Отчето об отправке e-mail</param>
+        public void UpDateLogFile(string logFilePath, string emailingReport)
+        {
+            GlobalHelper.FileIO.UpDateFile(logFilePath, emailingReport);
+        }
+
+        /// <summary>
+        /// Возвращает содержимое файла
+        /// </summary>
+        /// <param name="logFilePath">Путь к лог-файлу</param>
+        /// <returns>Содержимое лог-файла</returns>
+        public string GetLogFileContent(string logFilePath)
+        {
+            return GlobalHelper.FileIO.GetFileContent(logFilePath);
         }
     }
 }

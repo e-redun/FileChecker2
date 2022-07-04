@@ -50,7 +50,6 @@ namespace FileCheckerLib.Helpers
         /// Удаляет список файлов
         /// </summary>
         /// <param name="filePaths">Список путей к файлам подлежащим удалению</param>
-        /// <param name="logger">Логгер</param>
         public void DeleteFiles(List<FileRecordModel> fileRecords)
         {
             if (fileRecords.Count > 0)

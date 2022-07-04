@@ -1,5 +1,4 @@
-﻿using FileCheckerLib.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace FileCheckerLib.Helpers
 {

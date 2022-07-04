@@ -2,7 +2,6 @@
 using FileCheckerLib.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FileChecker
 {
@@ -13,14 +12,17 @@ namespace FileChecker
             // инициализация глобального хэлпера
             GlobalHelper.Initialize();
 
-
+            // помощник логики программы
             ILogicHelper logicHelper = new LogicHelper();
+
 
             //получение настроек приложения
             IAppSettings appSettings = logicHelper.GetAppSettings();
 
+
             //валидация настроек приложения
-            string validationResults = logicHelper.ValidateAppSettings3(appSettings);
+            string validationResults = logicHelper.ValidateAppSettings(appSettings);
+
 
             if (validationResults.Length > 0)
             {
@@ -59,7 +61,7 @@ namespace FileChecker
 
 
             // удаление файлов
-            GlobalHelper.FileIO.DeleteFiles(recordsToDelete);
+            logicHelper.DeleteFiles(recordsToDelete);
             
 
             // получение списка получателей лог-файла
@@ -67,11 +69,11 @@ namespace FileChecker
 
 
             // валидация e-mail адресов
-            logReceivers = GlobalHelper.Validator.ValidateEmails(logReceivers);
+            logReceivers = logicHelper.ValidateEmails(logReceivers);
 
 
             // сохранение лог-файла
-            string logFilePath = GlobalHelper.Logger.SaveLog();
+            string logFilePath = logicHelper.SaveLog(appSettings.LogFolder);
 
 
             // отправка лог-файла получателям
@@ -80,11 +82,11 @@ namespace FileChecker
 
 
             // дополнение сохраненного лог-файла отчетом об отправке
-            GlobalHelper.FileIO.UpDateFile(logFilePath, emailingReport);
+            logicHelper.UpDateLogFile(logFilePath, emailingReport);
 
 
             // вывод лог-файла на экран
-            string report = GlobalHelper.FileIO.GetFileContent(logFilePath);
+            string report = logicHelper.GetLogFileContent(logFilePath);
 
             Console.WriteLine(report);
 

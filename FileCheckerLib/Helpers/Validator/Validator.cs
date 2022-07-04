@@ -1,5 +1,4 @@
 ﻿using FileCheckerLib.Enums;
-using FileCheckerLib.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,7 +56,6 @@ namespace FileCheckerLib.Helpers
         /// Валидирует список e-mail
         /// </summary>
         /// <param name="emails">Cписок e-mail</param>
-        /// <param name="logger">Логгер</param>
         public List<string> ValidateEmails(List<string> emails)
         {
             List<string> output = new List<string>();

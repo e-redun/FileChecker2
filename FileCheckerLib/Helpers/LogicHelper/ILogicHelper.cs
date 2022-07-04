@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using FileCheckerLib.Enums;
 using FileCheckerLib.Models;
 
@@ -16,6 +15,11 @@ namespace FileCheckerLib.Helpers
         List<string> GetLogReceivers(string filePath);
         List<FileRecordModel> GetRecordsToDelete(List<ChildTableModel> childTables, string filePkColumnName);
         void InitializeConnection(DbTypes dbType);
-        string  ValidateAppSettings3(IAppSettings settings);
+        string  ValidateAppSettings(IAppSettings settings);
+        void DeleteFiles(List<FileRecordModel> recordsToDelete);
+        List<string> ValidateEmails(List<string> emails);
+        string SaveLog(string logFolderPath);
+        void UpDateLogFile(string logFilePath, string emailingReport);
+        string GetLogFileContent(string logFilePath);
     }
 }
